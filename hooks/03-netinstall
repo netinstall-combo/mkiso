@@ -1,7 +1,7 @@
 #!/bin/sh
 apk add networkmanager networkmanager-wifi networkmanager-tui
 wget -O /tmp/netinstall.zip https://github.com/netinstall-combo/netinstall/archive/refs/heads/master.zip
-mkdir /netinstall
-cd /netinstall
+cd /
 unzip /tmp/netinstall.zip
+mv netinstall-master netinstall/
 chmod 755 -R .

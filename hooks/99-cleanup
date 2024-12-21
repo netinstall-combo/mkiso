@@ -1,8 +1,4 @@
 #!/bin/sh
-### remove unused modules
-rm -rf  /lib/modules/*/kernel/drivers/media
-rm -rf  /lib/modules/*/kernel/drivers/gpu
-rm -rf  /lib/modules/*/kernel/sound
 
 ### remove unused directories
 rm -rf /usr/share/i18n
