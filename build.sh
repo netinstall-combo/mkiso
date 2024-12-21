@@ -50,7 +50,7 @@ install ../chroot/boot/initramfs-live initramfs-live
 # remove initrd from squashfs
 rm ../chroot/boot/initramfs-*
 # create squashfs
-mksquashfs ../chroot live/filesystem.squashfs -comp gzip -wildcards
+mksquashfs ../chroot live/filesystem.squashfs -comp xz -wildcards
 # create grub config
 mkdir -p boot/grub/
 cat > boot/grub/grub.cfg <<EOF
