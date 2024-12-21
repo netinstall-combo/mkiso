@@ -27,8 +27,8 @@ EOF
 # upgrade if needed
 chroot ./ apk upgrade
 # hooks
-mkdir ../build/chroot/data
-mount -o ro --bind ../../data ../build/chroot/data
+mkdir -p ./data
+mount -o ro --bind ../../data ./data
 cd ../../hooks
 for file in $(ls . | sort -V) ; do
     echo "Executing: $file"
@@ -58,7 +58,7 @@ insmod all_video
 terminal_output console
 terminal_input console
 menuentry "Netinstall Combo" {
-    linux /vmlinuz-edge quiet boot=live
+    linux /vmlinuz-edge quiet boot=live init=/netinstall/main.sh
     initrd /initramfs-live
 }
 EOF
