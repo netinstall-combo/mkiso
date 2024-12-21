@@ -47,8 +47,8 @@ cd ../build/isowork
 # copy kernel
 install ../chroot/boot/vmlinuz-edge vmlinuz-edge
 install ../chroot/boot/initramfs-live initramfs-live
-# remove initrd from squashfs
-rm ../chroot/boot/initramfs-*
+# remove /boot from squashfs
+rm ../chroot/boot/*
 # create squashfs
 mksquashfs ../chroot live/filesystem.squashfs -comp xz -wildcards
 # create grub config
