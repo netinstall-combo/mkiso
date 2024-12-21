@@ -4,4 +4,4 @@ wget -O /tmp/netinstall.zip https://github.com/netinstall-combo/netinstall/archi
 cd /
 unzip /tmp/netinstall.zip
 mv netinstall-master netinstall/
-chmod 755 -R .
+chmod 755 -R /netinstall
