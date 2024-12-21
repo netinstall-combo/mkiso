@@ -64,4 +64,4 @@ menuentry "Netinstall Combo" {
 EOF
 # create iso
 cd ../
-grub-mkrescue isowork -o netinstall-combo.iso
+grub-mkrescue isowork -o alpine.iso
