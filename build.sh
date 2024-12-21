@@ -58,7 +58,7 @@ insmod all_video
 terminal_output console
 terminal_input console
 menuentry "Netinstall Combo" {
-    linux /vmlinuz-edge quiet boot=live init=/netinstall/main.sh
+    linux /vmlinuz-edge quiet boot=live init=/netinstall/init.sh
     initrd /initramfs-live
 }
 EOF

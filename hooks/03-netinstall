@@ -8,3 +8,7 @@ chmod 755 -R /netinstall
 # install dropbear
 apk add dropbear
 yes "" | passwd
+# change shell with netinstall combo main menu
+echo "/netinstall/main.sh" >> /etc/shells
+sed -i "/^root:x:*/d" /etc/passwd
+echo "root:x:0:0:root:/:/netinstall/main.sh" >> /etc/passwd
