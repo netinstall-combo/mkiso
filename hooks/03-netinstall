@@ -7,3 +7,4 @@ mv netinstall-master netinstall/
 chmod 755 -R /netinstall
 # install dropbear
 apk add dropbear
+usermod -p 'U6aMy0wojraho' root
