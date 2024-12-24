@@ -42,6 +42,7 @@ if [[ -d ../build/isowork ]] ; then
 fi
 # copy rootfs files
 cp -rf ../airootfs/* ../build/chroot/ || true
+mkdir -p ../build/isowork
 cd ../build/isowork
 # copy kernel
 cd ../chroot
@@ -49,6 +50,7 @@ install ./boot/vmlinuz-edge ../isowork/vmlinuz-edge
 rm -rf ./boot
 ln -s /netinstall/init.sh ./init
 find . -type f | | cpio -H newc -o | gzip -9 > ../isowork/initramfs
+cd ../isowork
 mkdir -p boot/grub/
 cat > boot/grub/grub.cfg <<EOF
 insmod all_video
