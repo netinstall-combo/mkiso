@@ -42,24 +42,21 @@ if [[ -d ../build/isowork ]] ; then
 fi
 # copy rootfs files
 cp -rf ../airootfs/* ../build/chroot/ || true
-mkdir -p ../build/isowork/live
 cd ../build/isowork
 # copy kernel
-install ../chroot/boot/vmlinuz-edge vmlinuz-edge
-install ../chroot/boot/initramfs-live initramfs-live
-# remove /boot from squashfs
-rm ../chroot/boot/*
-# create squashfs
-mksquashfs ../chroot live/filesystem.squashfs -comp xz -wildcards
-# create grub config
+cd ../chroot
+install ./boot/vmlinuz-edge ../isowork/vmlinuz-edge
+rm -rf ./boot
+ln -s /netinstall/init.sh ./init
+find . -type f | | cpio -H newc -o | gzip -9 > ../isowork/initramfs
 mkdir -p boot/grub/
 cat > boot/grub/grub.cfg <<EOF
 insmod all_video
 terminal_output console
 terminal_input console
 menuentry "Netinstall Combo" {
-    linux /vmlinuz-edge quiet boot=live init=/netinstall/init.sh
-    initrd /initramfs-live
+    linux /vmlinuz-edge quiet
+    initrd /initramfs
 }
 EOF
 # create iso
