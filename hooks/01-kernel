@@ -1,0 +1,11 @@
+#!/bin/sh
+apk add linux-edge linux-firmware-none
+apk add bash ca-certificates eudev
+
+### remove unused modules
+rm -rf  /lib/modules/*/kernel/drivers/media
+rm -rf  /lib/modules/*/kernel/drivers/gpu
+rm -rf  /lib/modules/*/kernel/sound
+
+# remove login message
+> /etc/motd
