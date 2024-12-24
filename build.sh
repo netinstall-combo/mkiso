@@ -49,7 +49,7 @@ cd ../chroot
 install ./boot/vmlinuz-edge ../isowork/vmlinuz-edge
 rm -rf ./boot
 ln -s /netinstall/init.sh ./init
-find . -type f | cpio -H newc -o | gzip -9 > ../isowork/initramfs
+find . | cpio -H newc -o | gzip -9 > ../isowork/initramfs
 cd ../isowork
 mkdir -p boot/grub/
 cat > boot/grub/grub.cfg <<EOF
