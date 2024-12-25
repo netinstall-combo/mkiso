@@ -59,4 +59,4 @@ menuentry "Netinstall Combo" {
 EOF
 # create iso
 cd ../
-grub-mkrescue isowork -o alpine.iso --fonts="" --install-modules="linux normal fat" --compress=gz --locales=""
+grub-mkrescue isowork -o alpine.iso --fonts="" --install-modules="linux normal fat all_video" --compress=gz --locales=""
