@@ -7,5 +7,20 @@ rm -rf  /lib/modules/*/kernel/drivers/media
 rm -rf  /lib/modules/*/kernel/drivers/gpu
 rm -rf  /lib/modules/*/kernel/sound
 
+### add udhcpc script
+#!/bin/sh
+
+# This script gets called by udhcpc to setup the network interfaces
+
+mkdir -p /usr/share/udhcpc/
+cat > /usr/share/udhcpc/default.script <<EOF
+ip addr add $ip/$mask dev $interface
+
+if [ "$router" ]; then
+  ip route add default via $router dev $interface
+fi
+
+EOF
+
 # remove login message
 > /etc/motd

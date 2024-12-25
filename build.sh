@@ -27,15 +27,12 @@ EOF
 # upgrade if needed
 chroot ./ apk upgrade
 # hooks
-mkdir -p ./data
-mount -o ro --bind ../../data ./data
 cd ../../hooks
 for file in $(ls . | sort -V) ; do
     echo "Executing: $file"
     install $file ../build/chroot/tmp/hook
     chroot ../build/chroot/ ash /tmp/hook
 done
-umount -lf ../build/chroot/data
 rmdir ../build/chroot/data
 if [[ -d ../build/isowork ]] ; then
     rm -rf ../build/isowork
