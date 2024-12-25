@@ -1,6 +1,5 @@
 #!/bin/sh
 apk add linux-edge linux-firmware-none
-apk add bash ca-certificates eudev
 
 ### remove unused modules
 rm -rf  /lib/modules/*/kernel/drivers/media
@@ -13,6 +12,9 @@ mv /lib/modules /lib/modules.bak
 apk del linux-edge linux-firmware-none
 mv /lib/modules.bak /lib/modules
 mv /boot/vmlinuz-edge.bak /boot/vmlinuz-edge
+
+# install eudev
+apk add bash ca-certificates eudev
 
 ### add udhcpc script
 cat > /usr/share/udhcpc/default.script <<EOF
