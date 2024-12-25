@@ -52,6 +52,7 @@ cat > boot/grub/grub.cfg <<EOF
 insmod all_video
 terminal_output console
 terminal_input console
+clear
 linux /vmlinuz-edge quiet
 initrd /initramfs
 boot
