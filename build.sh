@@ -45,7 +45,7 @@ cd ../chroot
 install ./boot/vmlinuz-edge ../isowork/vmlinuz-edge
 rm -rf ./boot
 ln -s /netinstall/init.sh ./init
-find . | cpio -H newc -o | gzip -9 > ../isowork/initramfs
+find . | cpio -H newc -o | xz -9 > ../isowork/initramfs
 cd ../isowork
 mkdir -p boot/grub/
 cat > boot/grub/grub.cfg <<EOF
@@ -59,4 +59,4 @@ boot
 EOF
 # create iso
 cd ../
-grub-mkrescue isowork -o alpine.iso --fonts="" --install-modules="linux normal fat all_video" --compress=gz --locales=""
+grub-mkrescue isowork -o alpine.iso --fonts="" --install-modules="linux normal fat all_video" --compress=xz --locales=""
