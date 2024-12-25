@@ -14,10 +14,10 @@ rm -rf  /lib/modules/*/kernel/sound
 
 mkdir -p /usr/share/udhcpc/
 cat > /usr/share/udhcpc/default.script <<EOF
-ip addr add $ip/$mask dev $interface
+ip addr add \$ip/\$mask dev \$interface
 
-if [ "$router" ]; then
-  ip route add default via $router dev $interface
+if [ "\$router" ]; then
+  ip route add default via \$router dev \$interface
 fi
 
 EOF
