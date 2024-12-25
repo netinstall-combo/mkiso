@@ -22,6 +22,8 @@ fi
 
 EOF
 chmod 755 /usr/share/udhcpc/default.script
-
+# Add some dns
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
+echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 # remove login message
 > /etc/motd
