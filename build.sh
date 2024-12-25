@@ -52,10 +52,9 @@ cat > boot/grub/grub.cfg <<EOF
 insmod all_video
 terminal_output console
 terminal_input console
-menuentry "Netinstall Combo" {
-    linux /vmlinuz-edge quiet
-    initrd /initramfs
-}
+linux /vmlinuz-edge quiet
+initrd /initramfs
+boot
 EOF
 # create iso
 cd ../
