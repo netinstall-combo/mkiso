@@ -33,7 +33,6 @@ for file in $(ls . | sort -V) ; do
     install $file ../build/chroot/tmp/hook
     chroot ../build/chroot/ ash /tmp/hook
 done
-rmdir ../build/chroot/data
 if [[ -d ../build/isowork ]] ; then
     rm -rf ../build/isowork
 fi
