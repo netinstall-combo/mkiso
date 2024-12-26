@@ -7,7 +7,6 @@ rm -rf  /lib/modules/*/kernel/drivers/gpu
 rm -rf  /lib/modules/*/kernel/drivers/net/wireless
 rm -rf  /lib/modules/*/kernel/drivers/video
 rm -rf  /lib/modules/*/kernel/drivers/bluetooth
-rm -rf  /lib/modules/*/kernel/drivers/hwmon
 rm -rf  /lib/modules/*/kernel/sound
 
 # remove kernel package
