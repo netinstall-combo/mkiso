@@ -60,3 +60,20 @@ EOF
 # create iso
 cd ../
 grub-mkrescue isowork -o alpine.iso --fonts="" --install-modules="linux normal fat all_video" --compress=xz --locales=""
+cd ..
+# create pxeroot
+chroot chroot apk add syslinux
+mkdir -p pxeroot/pxelinux.cfg
+cp -f isowork/vmlinuz-edge pxeroot
+cp -f isowork/initramfs pxeroot
+cp -f chroot/usr/share/syslinux/{ldlinux,vesamenu,libcom32,libutil}.c32 \
+    chroot/usr/share/syslinux/pxelinux.0  pxeroot \
+cat > pxeroot/pxelinux.cfg/default <<EOF
+DEFAULT netinstall-combo
+
+LABEL netinstall-combo
+	LINUX /vmlinuz-edge
+	INITRD /initramfs
+	APPEND quiet
+EOF
+tar --xz -cf alpine-pxe.tar.xz pxeroot
