@@ -75,4 +75,4 @@ LABEL netinstall-combo
 	INITRD /initramfs
 	APPEND quiet
 EOF
-tar --xz -cf alpine-pxe.tar.xz pxeroot
+zip -r alpine-pxe.zip pxeroot
