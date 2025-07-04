@@ -6,7 +6,7 @@ unzip /tmp/netinstall.zip
 mv netinstall-master /netinstall/
 chmod 755 -R /netinstall
 # install dropbear
-apk add dropbear
+#apk add dropbear
 # change shell with netinstall combo main menu
 echo "/netinstall/main.sh" >> /etc/shells
 sed -i "/^root:x:*/d" /etc/passwd
