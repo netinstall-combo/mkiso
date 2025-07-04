@@ -17,7 +17,7 @@ mv /lib/modules.bak /lib/modules
 mv /boot/vmlinuz.bak /boot/vmlinuz
 
 # install eudev
-apk add bash ca-certificates eudev
+apk add bash ca-certificates eudev kmod
 
 ### add udhcpc script
 cat > /usr/share/udhcpc/default.script <<EOF
