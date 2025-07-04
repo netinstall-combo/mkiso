@@ -1,6 +1,6 @@
 #!/bin/bash
 umask 022
-set -e
+set -ex
 if [[ ! -d build ]] ; then
     rm -rf build
 fi
