@@ -17,9 +17,9 @@ mv /lib/modules.bak /lib/modules
 mv /boot/vmlinuz.bak /boot/vmlinuz
 
 # decompress modules if gzip (initrd will compress again)
-apk add find
+apk add findutils
 find /lib/modules -iname '*.ko.gz' -exec gzip -d {} \;
-apk del find
+apk del findutils
 
 # install eudev
 apk add bash ca-certificates eudev kmod
