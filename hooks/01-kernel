@@ -16,11 +16,6 @@ apk del linux-edge linux-firmware-none
 mv /lib/modules.bak /lib/modules
 mv /boot/vmlinuz.bak /boot/vmlinuz
 
-# decompress modules if gzip (initrd will compress again)
-apk add findutils
-find /lib/modules -iname '*.ko.gz' -exec gzip -d {} \;
-apk del findutils
-
 # install eudev
 apk add bash ca-certificates eudev kmod
 
