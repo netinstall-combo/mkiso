@@ -48,6 +48,9 @@ ln -s /netinstall/init.sh ./init
 # decompress modules if gzip (initrd will compress again)
 find lib/modules -iname '*.ko.gz' -exec gzip -d {} \;
 find lib/modules -iname '*.ko.xz' -exec xz -d {} \;
+for k in $(ls lib/modules) ; do
+    chroot . depmod -a "$k"
+done
 find . | tee /dev/stderr | cpio -H newc -o | gzip -9 > ../isowork/initramfs
 cd ../isowork
 mkdir -p boot/grub/
