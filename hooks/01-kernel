@@ -10,11 +10,11 @@ rm -rf  /lib/modules/*/kernel/drivers/bluetooth
 rm -rf  /lib/modules/*/kernel/sound
 
 # remove kernel package
-mv /boot/vmlinuz-edge /boot/vmlinuz-edge.bak
+mv /boot/vmlinuz-* /boot/vmlinuz.bak
 mv /lib/modules /lib/modules.bak
 apk del linux-edge linux-firmware-none
 mv /lib/modules.bak /lib/modules
-mv /boot/vmlinuz-edge.bak /boot/vmlinuz-edge
+mv /boot/vmlinuz.bak /boot/vmlinuz
 
 # install eudev
 apk add bash ca-certificates eudev
