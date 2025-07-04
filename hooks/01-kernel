@@ -22,7 +22,6 @@ apk add bash ca-certificates eudev
 ### add udhcpc script
 cat > /usr/share/udhcpc/default.script <<EOF
 #!/bin/sh
-
 # This script gets called by udhcpc to setup the network interfaces
 
 mkdir -p /usr/share/udhcpc/
@@ -31,11 +30,11 @@ ip addr add \$ip/\$mask dev \$interface
 if [ "\$router" ]; then
   ip route add default via \$router dev \$interface
 fi
-
+for i in \$dns ; do
+	echo "Adding DNS server \$i"
+	echo "nameserver \$i" >> /etc/resolv.conf
+	done
 EOF
 chmod 755 /usr/share/udhcpc/default.script
-# Add some dns
-echo "nameserver 1.1.1.1" > /etc/resolv.conf
-echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 # remove login message
 > /etc/motd
