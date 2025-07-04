@@ -45,7 +45,10 @@ cd ../chroot
 install ./boot/vmlinuz ../isowork/linux
 rm -rf ./boot
 ln -s /netinstall/init.sh ./init
-find . | cpio -H newc -o | gzip -9 > ../isowork/initramfs
+# decompress modules if gzip (initrd will compress again)
+find lib/modules -iname '*.ko.gz' -exec gzip -d {} \;
+find lib/modules -iname '*.ko.xz' -exec xz -d {} \;
+find . | tee /dev/stderr | cpio -H newc -o | gzip -9 > ../isowork/initramfs
 cd ../isowork
 mkdir -p boot/grub/
 cat > boot/grub/grub.cfg <<EOF
