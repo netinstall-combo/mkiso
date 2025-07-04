@@ -42,7 +42,7 @@ mkdir -p ../build/isowork
 cd ../build/isowork
 # copy kernel
 cd ../chroot
-install ./boot/vmlinuz-edge ../isowork/vmlinuz-edge
+install ./boot/vmlinuz ../isowork/linux
 rm -rf ./boot
 ln -s /netinstall/init.sh ./init
 find . | cpio -H newc -o | gzip -9 > ../isowork/initramfs
@@ -53,7 +53,7 @@ insmod all_video
 terminal_output console
 terminal_input console
 clear
-linux /vmlinuz-edge quiet
+linux /linux quiet
 initrd /initramfs
 boot
 EOF
@@ -63,7 +63,7 @@ grub-mkrescue isowork -o alpine.iso --fonts="" --install-modules="linux normal f
 # create pxeroot
 chroot chroot apk add syslinux
 mkdir -p pxeroot/pxelinux.cfg
-cp -f isowork/vmlinuz-edge pxeroot
+cp -f isowork/linux pxeroot
 cp -f isowork/initramfs pxeroot
 cp -f chroot/usr/share/syslinux/{ldlinux,vesamenu,libcom32,libutil}.c32 \
     chroot/usr/share/syslinux/pxelinux.0  pxeroot
@@ -71,7 +71,7 @@ cat > pxeroot/pxelinux.cfg/default <<EOF
 DEFAULT netinstall-combo
 
 LABEL netinstall-combo
-	LINUX /vmlinuz-edge
+	LINUX /linux
 	INITRD /initramfs
 	APPEND quiet
 EOF
