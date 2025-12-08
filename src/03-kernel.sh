@@ -16,22 +16,25 @@ function build(){
         find ./drivers/scsi -iname Kconfig -exec grep "config " {} \;
         find ./drivers/mmc -iname Kconfig -exec grep "config " {} \;
         find ./drivers/usb -iname Kconfig -exec grep "config " {} \;
-        find ./drivers/gpu -iname Kconfig -exec grep "config " {} \;
         find ./drivers/virtio -iname Kconfig -exec grep "config " {} \;
         find ./fs -iname Kconfig -exec grep "config " {} \;
     } | cut -f 2 -d " " | while read line ; do
          echo "CONFIG_$line"
          ./scripts/config --enable CONFIG_$line
     done
-    ./scripts/config --enable CONFIG_DRM_EFIDRM
+    {
+        find ./drivers/gpu -iname Kconfig -exec grep "config " {} \;
+    } | cut -f 2 -d " " | while read line ; do
+         echo "CONFIG_$line"
+         ./scripts/config --disable CONFIG_$line
+    done
+
+    ./scripts/config --enable CONFIG_FRAMEBUFFER_CONSOLE
     ./scripts/config --enable CONFIG_DRM_SIMPLEDRM
     ./scripts/config --enable CONFIG_DRM_VESADRM
     grep "CONFIG_[A-Z0-9]*_FS" .config  | cut -f2 -d" " | while read cfg ; do
         ./scripts/config --enable $cfg
     done
-    ./scripts/config --disable CONFIG_DRM_I915
-    ./scripts/config --disable CONFIG_DRM_NOUVEAU
-    ./scripts/config --disable CONFIG_DRM_AMDGPU
     cd ..
     yes "" | make bzImage -j`nproc` -C linux-${_kver}
 }
