@@ -12,7 +12,7 @@ function build(){
     cd linux-${_kver}
     make defconfig
     {
-        find ./drivers/net -iname Kconfig -exec grep "config " {} \;
+        find ./drivers/net/ethernet -iname Kconfig -exec grep "config " {} \;
         find ./drivers/scsi -iname Kconfig -exec grep "config " {} \;
         find ./drivers/mmc -iname Kconfig -exec grep "config " {} \;
         find ./drivers/usb -iname Kconfig -exec grep "config " {} \;
