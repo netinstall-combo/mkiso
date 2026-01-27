@@ -35,6 +35,8 @@ function build(){
     grep "CONFIG_[A-Z0-9]*_FS" .config  | cut -f2 -d" " | while read cfg ; do
         ./scripts/config --enable $cfg
     done
+    cat .config | grep -v "#" | grep "DEBUG" \
+        | sed "s/=.*//g" | sed "s|^|./scripts/config --disable |g" | sh
     cd ..
     yes "" | make bzImage -j`nproc` -C linux-${_kver}
 }
