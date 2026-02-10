@@ -2,7 +2,7 @@
 
 _kver="6.17"
 
-export CFLAGS="-O3 -s"
+export CFLAGS="-O3 -Os -s -flto"
 
 function build(){
     # fetch kernel
@@ -37,6 +37,13 @@ function build(){
     done
     cat .config | grep -v "#" | grep "DEBUG" \
         | sed "s/=.*//g" | sed "s|^|./scripts/config --disable |g" | sh
+    ./scripts/config --enable TRIM_UNUSED_KSYMS
+    ./scripts/config --enable LTO_MENU
+    ./scripts/config --enable CONFIG_KERNEL_XZ
+    ./scripts/config --enable CONFIG_OPTIMIZE_INLINING
+    ./scripts/config --enable CONFIG_SLOB
+    ./scripts/config --enable CONFIG_CORE_SMALL
+    ./scripts/config --enable CONFIG_NET_SMALL
     cd ..
     yes "" | make bzImage -j`nproc` -C linux-${_kver}
 }
