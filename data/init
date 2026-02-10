@@ -1,10 +1,10 @@
 #!/busybox ash
 # install yourself
 /busybox clear
-/busybox mkdir /bin
+/busybox mkdir -p /bin
 /busybox --install -s /bin
 # mount directories
-mkdir -p /dev /sys /proc /run /tmp
+mkdir -p /dev /sys /proc /run /tmp /dev/pts
 mount -t devtmpfs none /dev
 mount -t proc none /proc
 mount -t sysfs none /sys
@@ -12,7 +12,15 @@ mount -t sysfs none /sys
 for dev in $(ls /sys/class/net) ; do
     echo "Network enable $dev"
     ip link set up dev $dev
-    udhcpc -i $dev -s /etc/udhcpc/default.script 2>>/logs >>/logs &
+    udhcpc -b -i $dev -s /etc/udhcpc/default.script 2>>/logs >>/logs &
 done
-# spawn shell
-exec setsid cttyhack /bin/sh
+wait
+if cat /proc/cmdline | grep "ipv6=0" >/dev/null ; then
+    echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+fi
+if cat /proc/cmdline | grep "debug" >/dev/null ; then
+    # spawn shell
+    exec setsid cttyhack /bin/sh
+fi
+# run netinstall-combo
+exec /bin/ash -c "setsid cttyhack /bootstrap || exec /bin/ash"

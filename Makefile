@@ -1,3 +1,5 @@
+all: build install
+
 build:
 	@bash build.sh build
 install:

@@ -1,0 +1,28 @@
+#!/bin/sh
+set -e
+mkdir -p /rootfs
+cd /rootfs
+uri="https://dl-cdn.alpinelinux.org/alpine/edge/releases/$(uname -m)/"
+tarball=$(wget -O - "$uri" |grep "alpine-minirootfs" | grep "tar.gz<" | \
+    sort -V | tail -n 1 | cut -f2 -d"\"")
+wget -O "/tmp/$tarball" "$uri/$tarball"
+tar -xvf "/tmp/$tarball"
+rm -f "/tmp/$tarball"
+for dir in dev sys proc ; do
+    mount --bind /$dir /rootfs/$dir
+done
+source /rootfs/etc/profile
+cat /etc/resolv.conf > /rootfs/etc/resolv.conf
+chroot /rootfs apk add dialog agetty bash ca-certificates wget unzip
+# install netinstall
+wget -O /rootfs/tmp/netinstall.zip https://github.com/netinstall-combo/netinstall/archive/refs/heads/master.zip
+chroot /rootfs unzip /tmp/netinstall.zip
+mv /rootfs/netinstall-master /rootfs/netinstall/
+rm -f /rootfs/tmp/netinstall.zip
+chmod 755 -R /rootfs/netinstall
+# change shell with netinstall combo main menu
+echo "/netinstall/main.sh" >> /rootfs/etc/shells
+sed -i "/^root:x:*/d" /rootfs/etc/passwd
+echo "root:x:0:0:root:/:/netinstall/main.sh" >> /rootfs/etc/passwd
+exec chroot /rootfs/ agetty -L 115200 -a root console
+
