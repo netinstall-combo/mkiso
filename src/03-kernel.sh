@@ -10,7 +10,7 @@ function build(){
     [ -d linux-${_kver} ] || tar -xf linux-${_kver}.tar.xz
     # build kernel
     cd linux-${_kver}
-    make miniconfig
+    make defconfig
     {
         find ./drivers/net/ethernet -iname Kconfig -exec grep "config " {} \;
         find ./drivers/scsi -iname Kconfig -exec grep "config " {} \;
@@ -25,6 +25,7 @@ function build(){
     done
     {
         find ./drivers/gpu -iname Kconfig -exec grep "config " {} \;
+        find ./drivers/media -iname Kconfig -exec grep "config " {} \;
     } | cut -f 2 -d " " | while read line ; do
          echo "CONFIG_$line"
          ./scripts/config --disable CONFIG_$line
@@ -36,6 +37,7 @@ function build(){
     grep "CONFIG_[A-Z0-9]*_FS" .config  | cut -f2 -d" " | while read cfg ; do
         ./scripts/config --enable $cfg
     done
+    ./scripts/config --disable CONFIG_ACPI
     cat .config | grep -v "#" | grep "DEBUG" \
         | sed "s/=.*//g" | sed "s|^|./scripts/config --disable |g" | sh
     ./scripts/config --enable TRIM_UNUSED_KSYMS
