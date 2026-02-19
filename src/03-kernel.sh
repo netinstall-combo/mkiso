@@ -10,12 +10,13 @@ function build(){
     [ -d linux-${_kver} ] || tar -xf linux-${_kver}.tar.xz
     # build kernel
     cd linux-${_kver}
-    make defconfig
+    make miniconfig
     {
         find ./drivers/net/ethernet -iname Kconfig -exec grep "config " {} \;
         find ./drivers/scsi -iname Kconfig -exec grep "config " {} \;
         find ./drivers/mmc -iname Kconfig -exec grep "config " {} \;
-        find ./drivers/usb -iname Kconfig -exec grep "config " {} \;
+        find ./drivers/usb/storage -iname Kconfig -exec grep "config " {} \;
+        find ./drivers/hid -iname Kconfig -exec grep "config " {} \;
         find ./drivers/virtio -iname Kconfig -exec grep "config " {} \;
         find ./fs -iname Kconfig -exec grep "config " {} \;
     } | cut -f 2 -d " " | while read line ; do
