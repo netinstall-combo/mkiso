@@ -1,12 +1,12 @@
 #!/bin/bash
 
-_kver="6.17"
+_kver="7.1.1"
 
 export CFLAGS="-O3 -Os -s -flto"
 
 function build(){
     # fetch kernel
-    [ -f linux-${_kver}.tar.xz ] || wget https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${_kver}.tar.xz
+    [ -f linux-${_kver}.tar.xz ] || wget https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-${_kver}.tar.xz
     [ -d linux-${_kver} ] || tar -xf linux-${_kver}.tar.xz
     # build kernel
     cd linux-${_kver}

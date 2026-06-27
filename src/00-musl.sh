@@ -1,5 +1,5 @@
 #!/bin/bash
-ver="1.2.5"
+ver="1.2.6"
 export ARCH=x86_64
 function build(){
     [ -f musl-${ver}.tar.gz ] || wget https://musl.libc.org/releases/musl-${ver}.tar.gz

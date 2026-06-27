@@ -1,5 +1,5 @@
 #!/bin/bash
-_bver="1.37.0"
+_bver="1.38.0"
 export CFLAGS="-Wno-all -Os -s"
 export CC=musl-gcc
 function build(){
