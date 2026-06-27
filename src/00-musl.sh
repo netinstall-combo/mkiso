@@ -8,7 +8,7 @@ function build(){
     ./configure --prefix=$DESTDIR/toolchain
     make -j`nproc`
     make install DESTDIR=/
-    for tool in ar strip ; do
+    for tool in ar strip ld ; do
         ln -s /usr/bin/$tool $DESTDIR/toolchain/bin/musl-$tool
     done
     for dir in mtd asm asm-generic linux ; do
