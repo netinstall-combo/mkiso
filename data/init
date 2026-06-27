@@ -4,10 +4,11 @@
 /busybox mkdir -p /bin
 /busybox --install -s /bin
 # mount directories
-mkdir -p /dev /sys /proc /run /tmp /dev/pts
+mkdir -p /dev /sys /proc /run /tmp
 mount -t devtmpfs none /dev
 mount -t proc none /proc
 mount -t sysfs none /sys
+mkdir -p /dev/pts
 mount -t devpts devpts /dev/pts
 # create stdio symlinks
 ln -s /proc/self/fd/0 /dev/stdin
