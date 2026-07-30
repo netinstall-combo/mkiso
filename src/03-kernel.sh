@@ -1,6 +1,6 @@
 #!/bin/bash
 
-_kver="7.1.1"
+_kver="7.1.5"
 
 export CFLAGS="-O3 -Os -s -flto"
 
@@ -11,6 +11,15 @@ function build(){
     # build kernel
     cd linux-${_kver}
     make defconfig
+    # Disable unused modules
+    {
+        find ./drivers/gpu -iname Kconfig -exec grep "config " {} \;
+        find ./drivers/media -iname Kconfig -exec grep "config " {} \;
+    } | cut -f 2 -d " " | while read line ; do
+         echo "CONFIG_$line"
+         ./scripts/config --disable CONFIG_$line
+    done
+    # Enable modules
     {
         find ./drivers/net/ethernet -iname Kconfig -exec grep "config " {} \;
         find ./drivers/scsi -iname Kconfig -exec grep "config " {} \;
@@ -22,13 +31,6 @@ function build(){
     } | cut -f 2 -d " " | while read line ; do
          echo "CONFIG_$line"
          ./scripts/config --enable CONFIG_$line
-    done
-    {
-        find ./drivers/gpu -iname Kconfig -exec grep "config " {} \;
-        find ./drivers/media -iname Kconfig -exec grep "config " {} \;
-    } | cut -f 2 -d " " | while read line ; do
-         echo "CONFIG_$line"
-         ./scripts/config --disable CONFIG_$line
     done
 
     ./scripts/config --enable CONFIG_FRAMEBUFFER_CONSOLE

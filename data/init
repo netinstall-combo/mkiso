@@ -16,6 +16,9 @@ ln -s /proc/self/fd/1 /dev/stdout
 ln -s /proc/self/fd/2 /dev/stderr
 # busybox mdev populate
 /busybox mdev -s
+if cat /proc/cmdline | grep "ipv6=0" >/dev/null ; then
+    echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
+fi
 # busybox networking
 for dev in $(ls /sys/class/net) ; do
     echo "Network enable $dev"
@@ -23,9 +26,6 @@ for dev in $(ls /sys/class/net) ; do
     udhcpc -b -i $dev -s /etc/udhcpc/default.script 2>>/logs >>/logs &
 done
 wait
-if cat /proc/cmdline | grep "ipv6=0" >/dev/null ; then
-    echo 1 > /proc/sys/net/ipv6/conf/all/disable_ipv6
-fi
 if cat /proc/cmdline | grep "debug" >/dev/null ; then
     # spawn shell
     exec setsid cttyhack /bin/sh
