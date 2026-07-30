@@ -9,5 +9,5 @@ function package(){
     # generate initramfs
     cd $DESTDIR/initrd/
     chmod +x -R .
-    find . | cpio -R root:root -H newc -o - > $DESTDIR/initramfs
+    find . | busybox cpio -R root:root -H newc -o - > $DESTDIR/initramfs
 }
